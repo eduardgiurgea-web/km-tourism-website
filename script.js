@@ -266,6 +266,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let aIndex = 0;
 
+        // Check if mobile to slow down the video playback (e.g. 4fps instead of 8fps)
+        const speed = window.innerWidth <= 900 ? (1000 / 4) : (1000 / 8);
+
         const playAboutSequence = () => {
             setInterval(() => {
                 aIndex = (aIndex + 1) % aFrameCount;
@@ -273,10 +276,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     aboutCtx.clearRect(0, 0, aboutCanvas.width, aboutCanvas.height);
                     aboutCtx.drawImage(aImages[aIndex], 0, 0, aboutCanvas.width, aboutCanvas.height);
                 }
-            }, 1000 / 8); // 8fps
+            }, speed);
         };
 
         playAboutSequence();
+    }
+
+    // 9. Mobile Card Glow Observer
+    const mobileCards = document.querySelectorAll('.horizontal-card');
+    if (mobileCards.length > 0) {
+        // Only apply special glow behavior on mobile
+        if (window.innerWidth <= 900) {
+            const cardObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('mobile-active-glow');
+                    } else {
+                        entry.target.classList.remove('mobile-active-glow');
+                    }
+                });
+            }, {
+                threshold: 0.5, // Trigger when card is 50% in view
+                rootMargin: "-10% 0px -10% 0px" // Slightly inset so it doesn't trigger at absolute edges
+            });
+
+            mobileCards.forEach(card => cardObserver.observe(card));
+        }
     }
 
 

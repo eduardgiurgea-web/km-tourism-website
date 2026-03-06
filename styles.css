@@ -1072,26 +1072,41 @@ button {
     align-items: center;
   }
 
-  /* Make horizontal scrolling show only 1 card on mobile */
+  .horizontal-wrapper {
+    overflow-x: hidden;
+    overflow-y: visible;
+    scroll-snap-type: none;
+  }
+
+  /* Vertical stack on mobile */
   .horizontal-card,
   .horizontal-card.center-card {
-    width: 85vw;
+    width: 90vw;
     max-width: none;
     height: 60vh;
     flex-shrink: 0;
+    margin: 2rem auto;
+    /* Cards start darker, JavaScript observer will trigger mobile-active-glow */
+    filter: grayscale(50%) brightness(0.6);
+    box-shadow: none;
+    border-color: transparent;
+    transition: all 0.8s ease;
   }
 
-  /* Align row to the start so it can scroll properly out of the screen */
+  /* When the observer triggers, they light up and glow */
+  .horizontal-card.mobile-active-glow {
+    filter: grayscale(0%) brightness(1.1);
+    box-shadow: 0 0 40px rgba(214, 186, 107, 0.8), inset 0 0 20px rgba(214, 186, 107, 0.3);
+    border-color: var(--color-gold);
+    transform: scale(1.02);
+  }
+
+  /* Align row to vertical stack */
   .experiences-row {
-    justify-content: flex-start;
-    padding: 2rem 7.5vw;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
     gap: 1rem;
-  }
-
-  /* Remove the grayscale filter on mobile since hover is unavailable */
-  .horizontal-card {
-    filter: grayscale(0%);
-    box-shadow: 0 0 15px rgba(214, 186, 107, 0.3);
   }
 }
 
@@ -1119,5 +1134,5 @@ body::after {
   height: 100vh;
   pointer-events: none;
   z-index: 9999;
-  animation: pulseMarginGlow 5s infinite ease-in-out;
+  animation: pulseMarginGlow 2s infinite ease-in-out;
 }
