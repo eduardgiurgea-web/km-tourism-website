@@ -1093,39 +1093,18 @@ button {
     transition: all 0.8s ease;
   }
 
-  /* Mobile Custom Entrances (Apple style) */
-  .experiences-row .horizontal-card {
-    opacity: 0 !important;
-  }
-
-  #card-0 {
-    transform: translateY(40px) scale(0.95) !important;
-  }
-
-  #card-1 {
-    transform: translateX(50px) !important;
-  }
-
-  #card-2 {
-    transform: translateX(-50px) !important;
-  }
-
-  #card-3 {
-    transform: translateY(50px) rotate(3deg) !important;
-  }
-
-  #card-center {
-    transform: translateY(60px) scale(1.05) !important;
-  }
-
-  /* When the observer triggers, they light up, glow, and slide into place */
+  /* When the observer triggers, they light up and glow */
   .horizontal-card.mobile-active-glow {
-    opacity: 1 !important;
-    transform: translate(0, 0) scale(1.02) rotate(0) !important;
     filter: grayscale(0%) brightness(1.1);
     box-shadow: 0 0 40px rgba(214, 186, 107, 0.8), inset 0 0 20px rgba(214, 186, 107, 0.3);
     border-color: var(--color-gold);
-    transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform: scale(1.02);
+  }
+
+  /* Disable Desktop fly-in animations completely on mobile */
+  .experiences-row .outer-card {
+    opacity: 1 !important;
+    transform: translate(0, 0) !important;
   }
 
   /* Align row to vertical stack */

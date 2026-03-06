@@ -287,17 +287,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileCards.length > 0) {
         // Only apply special glow behavior on mobile
         if (window.innerWidth <= 900) {
-            const cardObserver = new IntersectionObserver((entries, observer) => {
+            const cardObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('mobile-active-glow');
-                        // Keep them permanently visible once scrolled into view
-                        observer.unobserve(entry.target);
+                    } else {
+                        entry.target.classList.remove('mobile-active-glow');
                     }
                 });
             }, {
-                threshold: 0.15, // Trigger very early (15% in view) so there's no delay
-                rootMargin: "0px 0px -10% 0px"
+                threshold: 0.5, // Trigger when card is 50% in view
+                rootMargin: "-10% 0px -10% 0px" // Slightly inset so it doesn't trigger at absolute edges
             });
 
             mobileCards.forEach(card => cardObserver.observe(card));
