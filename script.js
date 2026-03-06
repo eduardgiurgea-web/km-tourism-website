@@ -282,49 +282,26 @@ document.addEventListener('DOMContentLoaded', () => {
         playAboutSequence();
     }
 
-    // 9. Mobile Card Scroll Animations & Glow Observer
+    // 9. Mobile Card Glow Observer
     const mobileCards = document.querySelectorAll('.horizontal-card');
-    if (mobileCards.length > 0 && window.innerWidth <= 900) {
-
-        // Array of different animation starting classes
-        const animClasses = ['mobile-anim-left', 'mobile-anim-right', 'mobile-anim-fade', 'mobile-anim-scale'];
-
-        // 1. One-time Reveal Observer (triggers Apple-style enter animation instantly)
-        const revealObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('mobile-visible');
-                    observer.unobserve(entry.target); // Only animate in once
-                }
+    if (mobileCards.length > 0) {
+        // Only apply special glow behavior on mobile
+        if (window.innerWidth <= 900) {
+            const cardObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('mobile-active-glow');
+                        // Keep them permanently visible once scrolled into view
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15, // Trigger very early (15% in view) so there's no delay
+                rootMargin: "0px 0px -10% 0px"
             });
-        }, {
-            threshold: 0.1, // Trigger almost instantly when entering the screen
-            rootMargin: "0px 0px -50px 0px" // Trigger slightly before it hits the bottom
-        });
 
-        // 2. Continuous Glow Observer (triggers gold glow when centered)
-        const glowObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('mobile-active-glow');
-                } else {
-                    entry.target.classList.remove('mobile-active-glow');
-                }
-            });
-        }, {
-            threshold: 0.5, // Trigger when card is at least 50% in view
-            rootMargin: "-10% 0px -10% 0px" // Slightly inset
-        });
-
-        mobileCards.forEach((card, index) => {
-            // Assign a varied entrance animation to each card
-            const animClass = animClasses[index % animClasses.length];
-            card.classList.add(animClass);
-
-            // Observe for both reveal and glow
-            revealObserver.observe(card);
-            glowObserver.observe(card);
-        });
+            mobileCards.forEach(card => cardObserver.observe(card));
+        }
     }
 
 

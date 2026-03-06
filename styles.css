@@ -1093,42 +1093,39 @@ button {
     transition: all 0.8s ease;
   }
 
-  /* When the observer triggers, they light up and glow */
+  /* Mobile Custom Entrances (Apple style) */
+  .experiences-row .horizontal-card {
+    opacity: 0 !important;
+  }
+
+  #card-0 {
+    transform: translateY(40px) scale(0.95) !important;
+  }
+
+  #card-1 {
+    transform: translateX(50px) !important;
+  }
+
+  #card-2 {
+    transform: translateX(-50px) !important;
+  }
+
+  #card-3 {
+    transform: translateY(50px) rotate(3deg) !important;
+  }
+
+  #card-center {
+    transform: translateY(60px) scale(1.05) !important;
+  }
+
+  /* When the observer triggers, they light up, glow, and slide into place */
   .horizontal-card.mobile-active-glow {
+    opacity: 1 !important;
+    transform: translate(0, 0) scale(1.02) rotate(0) !important;
     filter: grayscale(0%) brightness(1.1);
     box-shadow: 0 0 40px rgba(214, 186, 107, 0.8), inset 0 0 20px rgba(214, 186, 107, 0.3);
     border-color: var(--color-gold);
-    transform: scale(1.02);
-  }
-
-  /* Disability of desktop animations and replacing with mobile-specific scroll enter animations */
-  .experiences-row .outer-card,
-  .experiences-row .center-card {
-    opacity: 0;
-    transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  /* Different mobile enter animation starting states */
-  .mobile-anim-left {
-    transform: translateX(-50px);
-  }
-
-  .mobile-anim-right {
-    transform: translateX(50px);
-  }
-
-  .mobile-anim-fade {
-    transform: translateY(30px);
-  }
-
-  .mobile-anim-scale {
-    transform: scale(0.9);
-  }
-
-  /* Class added by JS specifically for mobile reveal */
-  .experiences-row .horizontal-card.mobile-visible {
-    opacity: 1;
-    transform: translate(0, 0) scale(1);
+    transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
   /* Align row to vertical stack */
