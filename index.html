@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KM Tourism | A World Within Itself</title>
+
+  <!-- Font Preconnect & Import -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Navigation Header -->
+  <header id="main-header">
+    <div class="nav-container">
+      <a href="#" class="logo-link">
+        <img src="kmtoursimlogo.png" alt="KM Tourism" class="header-logo">
+      </a>
+      <nav class="desktop-nav">
+        <ul>
+          <li><a href="#experiences">Experiences</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#events">Events</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-cta">
+        <button class="btn-frosted">Request an instant call back</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <div class="video-container">
+        <!-- Image Sequence Canvas -->
+        <canvas id="hero-canvas" class="hero-video"></canvas>
+        <div class="video-overlay"></div>
+        <div class="particle-container" id="particles"></div>
+      </div>
+
+      <div class="hero-content">
+        <h1 class="hero-title reveal-text">A World Within<br>Itself</h1>
+        <p class="hero-subtitle fade-up">Exclusive Dubai Experiences, Curated For The Few</p>
+        <button class="btn-solid fade-up delay-1">Discover The Collection</button>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                               Experiences                               -->
+    <!-- ----------------------------------------------------------------------- -->
+    <section id="experiences" class="experiences">
+      <div class="container">
+        <div class="section-header">
+          <!-- The title spans start off-screen and slide together on scroll -->
+          <h2 class="section-title slide-together"><span class="slide-left">Curated</span> <span
+              class="slide-right">Services</span></h2>
+          <div class="animated-divider slide-together">
+            <span class="slide-left line-segment"></span>
+            <span class="slide-right line-segment"></span>
+          </div>
+        </div>
+
+        <div class="horizontal-wrapper">
+          <div class="experiences-row" id="horizontal-row">
+
+            <!-- Card 2: Desert Activities (Origin: Left) -->
+            <div class="experience-card horizontal-card outer-card" id="card-2" data-origin="left">
+              <div class="card-inner">
+                <div class="card-image">
+                  <img src="assets/hf_20260306_101807_36eb1f43-7590-4e4d-9e13-ca9ab2ddf7f6.jpeg"
+                    alt="Desert Activities">
+                </div>
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                  <h3>Desert Activities</h3>
+                  <p class="card-desc">The safari will give you the golden opportunity to see the towering sand dunes of
+                    the desert as you go on a roller coaster ride on board your all-terrain vehicle.</p>
+                  <button class="btn-text">Reserve Now <span class="arrow">→</span></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 0: Seaplane & Helicopter (Origin: Top) -->
+            <div class="experience-card horizontal-card outer-card" id="card-0" data-origin="top">
+              <div class="card-inner">
+                <div class="card-image">
+                  <img src="assets/hf_20260306_101402_97d641e7-fbe0-4a5c-804a-d52cf15d0cd6.jpeg"
+                    alt="Seaplane & Helicopter Sightseeing">
+                </div>
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                  <h3>Seaplane & Helicopter</h3>
+                  <p class="card-desc">Seawings offers scenic tours as well as transfer flights to various destinations
+                    in the UAE.</p>
+                  <button class="btn-text">Reserve Now <span class="arrow">→</span></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 4: City Tours & Luxury Travel (Center Anchor) -->
+            <div class="experience-card horizontal-card center-card active-glow" id="card-center">
+              <div class="card-inner">
+                <div class="card-image">
+                  <img src="assets/hf_20260306_120655_9411ed0a-11be-4075-aee4-90c4045518f3.jpeg"
+                    alt="City Tours & Luxury Travel">
+                </div>
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                  <h3>City Tours & Luxury Travel</h3>
+                  <p class="card-desc">At KM Tourism we know that everyone’s idea of what makes the perfect luxury
+                    family holiday.</p>
+                  <button class="btn-text">Reserve Now <span class="arrow">→</span></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 1: Events (Origin: Right) - WITH CANVAS VIDEO -->
+            <div class="experience-card horizontal-card outer-card" id="card-1" data-origin="right">
+              <div class="card-inner">
+                <div class="card-image">
+                  <canvas id="events-canvas" class="events-video-canvas"></canvas>
+                </div>
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                  <h3>Events</h3>
+                  <p class="card-desc">A must do experience, ideal for private parties, weddings and celebrations.</p>
+                  <button class="btn-text">Reserve Now <span class="arrow">→</span></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Hot Air Ballooning (Origin: Bottom) -->
+            <div class="experience-card horizontal-card outer-card" id="card-3" data-origin="bottom">
+              <div class="card-inner">
+                <div class="card-image">
+                  <img src="assets/hf_20260306_101652_87af05e7-1927-4415-98e8-bef3fc458e00.jpeg"
+                    alt="Hot Air Ballooning">
+                </div>
+                <div class="card-overlay"></div>
+                <div class="card-content">
+                  <h3>Hot Air Ballooning</h3>
+                  <p class="card-desc">The desert sunrise from the air on this hot air balloon ride in Dubai.</p>
+                  <button class="btn-text">Reserve Now <span class="arrow">→</span></button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------------------- -->
+    <!--                                About Us                                 -->
+    <!-- ----------------------------------------------------------------------- -->
+    <section id="about-us" class="about-apple-section">
+      <canvas id="about-canvas" class="about-bg-canvas"></canvas>
+      <div class="container about-content">
+        <h2 class="about-title fade-up">About Us</h2>
+        <p class="about-desc fade-up delay-1">
+          KM Tourism & Travel is a full fledged Destination Management Company duly authorized by the Department of
+          Economy and Tourism (DET). We offer a wide range of services such as – ground handling arrangements including
+          Hotel reservations / Sightseeing and excursions / Transportation / Visa assistance / Organizing special
+          experiences / tailor made individual tours for small groups and incentives.
+        </p>
+
+        <h3 class="strengths-title fade-up delay-2">Our Strengths Are:</h3>
+        <ul class="strengths-list">
+          <li class="fade-up delay-3">100% client satisfaction track record.</li>
+          <li class="fade-up delay-4">One platform covering all 7 Emirates.</li>
+          <li class="fade-up delay-5">Young energetic and professional team with experience of 02 decades to handle the
+            business.</li>
+        </ul>
+        <button class="btn-solid fade-up delay-6" style="margin-top: 2rem;">Let's Chat</button>
+      </div>
+    </section>
+
+    <!-- Stats / Legacy -->
+    <section class="legacy section-padding" id="about">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item fade-up">
+            <span class="stat-number" data-target="20">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Years Experience</span>
+          </div>
+          <div class="stat-item fade-up delay-1">
+            <span class="stat-number" data-target="7">0</span>
+            <span class="stat-label">Emirates Covered</span>
+          </div>
+          <div class="stat-item fade-up delay-2">
+            <span class="stat-number" data-target="100">0</span><span class="stat-plus">%</span>
+            <span class="stat-label">Client Satisfaction</span>
+          </div>
+          <div class="stat-item fade-up delay-3">
+            <span class="stat-number" data-target="10000">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Experiences Delivered</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote -->
+    <section class="testimonial">
+      <div class="quote-background">
+        <!-- Subtle Silhouette -->
+      </div>
+      <div class="container quote-container fade-up">
+        <blockquote class="cinematic-quote">
+          "The ultimate luxury is peace of mind, knowing every detail is flawlessly executed in the city of gold."
+        </blockquote>
+        <div class="quote-author">
+          <span class="author-name">KM Tourism</span>
+          <span class="author-title">Executive Board</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Us -->
+    <section class="why-us section-padding" id="why-us">
+      <div class="container">
+        <div class="section-header center">
+          <h2 class="section-title reveal-text">The KM Advantage</h2>
+          <div class="gold-line center-line"></div>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-item fade-up">
+            <div class="feature-icon">
+              <!-- Inline SVG for 24/7 -->
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                <path d="M12 6v6l4 2"></path>
+              </svg>
+            </div>
+            <h4>24/7 Concierge Support</h4>
+            <p>Unwavering dedication round the clock to ensure your journey is seamless.</p>
+          </div>
+
+          <div class="feature-item fade-up delay-1">
+            <div class="feature-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <h4>Hassle-Free Visas</h4>
+            <p>Expedited, pristine visa processing exclusively tailored for our guests.</p>
+          </div>
+
+          <div class="feature-item fade-up delay-2">
+            <div class="feature-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+                <circle cx="12" cy="5" r="2"></circle>
+                <path d="M12 7v4"></path>
+                <line x1="8" y1="16" x2="8" y2="16.01"></line>
+                <line x1="16" y1="16" x2="16" y2="16.01"></line>
+              </svg>
+            </div>
+            <h4>Private Fleet</h4>
+            <p>Chauffeur-driven luxury vehicles at your immediate disposal.</p>
+          </div>
+
+          <div class="feature-item fade-up">
+            <div class="feature-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <h4>Direct Hotel Contracting</h4>
+            <p>Unrivaled access and exclusive rates at Dubai's most prestigious resorts.</p>
+          </div>
+
+          <div class="feature-item fade-up delay-1">
+            <div class="feature-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polygon
+                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                </polygon>
+              </svg>
+            </div>
+            <h4>Bespoke Itineraries</h4>
+            <p>Journeys crafted specifically around your unique desires and pace.</p>
+          </div>
+
+          <div class="feature-item fade-up delay-2">
+            <div class="feature-icon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <h4>Personalized Attention</h4>
+            <p>An uncompromising commitment to exceptional, discreet service.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta" id="contact">
+      <div class="cta-bg-image"></div>
+      <div class="cta-overlay"></div>
+      <div class="container cta-content fade-up">
+        <h2 class="section-title">Your Private Dubai Experience Awaits</h2>
+        <div class="cta-buttons">
+          <button class="btn-solid-gold">Book a Private Consultation</button>
+          <button class="btn-outline-white">WhatsApp Us Now</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand fade-up">
+          <img src="kmtoursimlogo.png" alt="KM Tourism" class="footer-logo">
+          <p class="brand-desc">Curating the extraordinary in the Emirates. A World Within Itself.</p>
+        </div>
+
+        <div class="footer-links fade-up delay-1">
+          <h4 class="footer-heading">Quick Links</h4>
+          <ul>
+            <li><a href="#experiences">The Collection</a></li>
+            <li><a href="#about">Our Legacy</a></li>
+            <li><a href="#events">MICE & Weddings</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact fade-up delay-2">
+          <h4 class="footer-heading">Connect</h4>
+          <ul>
+            <li><a href="tel:+97143486559">+971-43486559</a></li>
+            <li><a href="mailto:Info@kmtourism.com">Info@kmtourism.com</a></li>
+            <li>Dubai, United Arab Emirates</li>
+          </ul>
+          <div class="social-icons">
+            <!-- Social placeholders -->
+            <a href="#" class="social-icon">IN</a>
+            <a href="#" class="social-icon">IG</a>
+            <a href="#" class="social-icon">FB</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-divider"></div>
+        <p class="copyright">&copy; 2026 KM Tourism. All Rights Reserved. Exclusive Destination Management.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
