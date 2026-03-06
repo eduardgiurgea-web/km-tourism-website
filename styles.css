@@ -1101,6 +1101,12 @@ button {
     transform: scale(1.02);
   }
 
+  /* Disable Desktop fly-in animations completely on mobile */
+  .experiences-row .outer-card {
+    opacity: 1 !important;
+    transform: translate(0, 0) !important;
+  }
+
   /* Align row to vertical stack */
   .experiences-row {
     flex-direction: column;
