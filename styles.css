@@ -1101,10 +1101,34 @@ button {
     transform: scale(1.02);
   }
 
-  /* Disable Desktop fly-in animations completely on mobile */
-  .experiences-row .outer-card {
-    opacity: 1 !important;
-    transform: translate(0, 0) !important;
+  /* Disability of desktop animations and replacing with mobile-specific scroll enter animations */
+  .experiences-row .outer-card,
+  .experiences-row .center-card {
+    opacity: 0;
+    transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* Different mobile enter animation starting states */
+  .mobile-anim-left {
+    transform: translateX(-50px);
+  }
+
+  .mobile-anim-right {
+    transform: translateX(50px);
+  }
+
+  .mobile-anim-fade {
+    transform: translateY(30px);
+  }
+
+  .mobile-anim-scale {
+    transform: scale(0.9);
+  }
+
+  /* Class added by JS specifically for mobile reveal */
+  .experiences-row .horizontal-card.mobile-visible {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
   }
 
   /* Align row to vertical stack */
