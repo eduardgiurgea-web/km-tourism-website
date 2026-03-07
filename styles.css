@@ -2,11 +2,11 @@
 /*                               CSS Variables                                */
 /* -------------------------------------------------------------------------- */
 :root {
-  /* Color Palette - Lightened 15% for a lighter Desert feel */
-  --color-black: #1f1f1f;
-  /* Was #0a0a0a */
-  --color-black-light: #2b2b2b;
-  /* Was #161616 */
+  /* Color Palette - Lightened for a brighter Desert feel */
+  --color-black: #2a2825;
+  /* Was #1f1f1f */
+  --color-black-light: #383531;
+  /* Was #2b2b2b */
   --color-gold: #d6ba6b;
   /* Was #C9A84C */
   --color-gold-dark: #c0a049;
