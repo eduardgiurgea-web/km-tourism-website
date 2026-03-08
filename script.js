@@ -502,7 +502,10 @@ document.addEventListener('DOMContentLoaded', () => {
    ========================================================= */
 (function () {
   var N8N_CHAT_WEBHOOK = 'https://n8n.srv1470515.hstgr.cloud/webhook/charlotte-chat';
-  var sessionId = 'session-' + Math.random().toString(36).slice(2);
+  var sessionId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
   var isWaiting = false;
 
   window.openChatModal = function () {

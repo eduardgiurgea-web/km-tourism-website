@@ -32,7 +32,7 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"assistantId\": \"f8a1a26e-e90e-42ef-b86b-a7ca78df8640\",\n  \"input\": {\n    \"type\": \"text\",\n    \"text\": \"{{ $json.body.message }}\"\n  },\n  \"sessionId\": \"{{ $json.body.sessionId }}\"\n}",
+        "jsonBody": "={\n  \"assistantId\": \"f8a1a26e-e90e-42ef-b86b-a7ca78df8640\",\n  \"input\": \"{{ $json.body.message }}\",\n  \"sessionId\": \"{{ $json.body.sessionId }}\"\n}",
         "options": {}
       },
       "id": "vapi-chat",
