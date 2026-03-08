@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
    ========================================================= */
 (function () {
   var N8N_CHAT_WEBHOOK = 'https://n8n.srv1470515.hstgr.cloud/webhook/charlotte-chat';
-  var previousChatId = null;
+  var conversationHistory = [];
   var isWaiting = false;
 
   window.openChatModal = function () {
@@ -531,6 +531,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var text = input.value.trim();
     if (!text) return;
 
+    conversationHistory.push({ role: 'user', content: text });
     appendBubble('user', text);
     input.value = '';
     isWaiting = true;
@@ -538,19 +539,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var typingEl = appendTyping();
 
-    var requestBody = { message: text };
-    if (previousChatId) requestBody.previousChatId = previousChatId;
-
     fetch(N8N_CHAT_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(requestBody)
+      body: JSON.stringify({ messages: conversationHistory.slice() })
     })
       .then(function (r) { return r.json(); })
       .then(function (data) {
         typingEl.remove();
-        if (data.chatId) previousChatId = data.chatId;
-        appendBubble('charlotte', data.reply || 'I\'m sorry, I couldn\'t process that. Please try again.');
+        var reply = data.reply || 'I\'m sorry, I couldn\'t process that. Please try again.';
+        conversationHistory.push({ role: 'assistant', content: reply });
+        appendBubble('charlotte', reply);
       })
       .catch(function () {
         typingEl.remove();

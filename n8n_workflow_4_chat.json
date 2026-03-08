@@ -19,7 +19,7 @@
     },
     {
       "parameters": {
-        "jsCode": "const body = $input.item.json.body;\nconst vapiRequest = { input: body.message };\nif (body.previousChatId) {\n  vapiRequest.previousChatId = body.previousChatId;\n} else {\n  vapiRequest.assistantId = 'f8a1a26e-e90e-42ef-b86b-a7ca78df8640';\n}\nreturn [{ json: vapiRequest }];"
+        "jsCode": "const body = $input.item.json.body;\nconst messages = body.messages || [{ role: 'user', content: body.message }];\nreturn [{ json: { assistantId: 'f8a1a26e-e90e-42ef-b86b-a7ca78df8640', input: messages } }];"
       },
       "id": "code-build-request",
       "name": "Code — Build Request",
