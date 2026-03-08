@@ -19,6 +19,16 @@
     },
     {
       "parameters": {
+        "jsCode": "const body = $input.item.json.body;\nconst vapiRequest = { input: body.message };\nif (body.previousChatId) {\n  vapiRequest.previousChatId = body.previousChatId;\n} else {\n  vapiRequest.assistantId = 'f8a1a26e-e90e-42ef-b86b-a7ca78df8640';\n}\nreturn [{ json: vapiRequest }];"
+      },
+      "id": "code-build-request",
+      "name": "Code — Build Request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
         "method": "POST",
         "url": "https://api.vapi.ai/chat",
         "sendHeaders": true,
@@ -32,29 +42,29 @@
         },
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"assistantId\": \"f8a1a26e-e90e-42ef-b86b-a7ca78df8640\",\n  \"input\": \"{{ $json.body.message }}\",\n  \"sessionId\": \"{{ $json.body.sessionId }}\"\n}",
+        "jsonBody": "={{ JSON.stringify($json) }}",
         "options": {}
       },
       "id": "vapi-chat",
       "name": "Vapi — Chat",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [460, 300]
+      "position": [680, 300]
     },
     {
       "parameters": {
-        "jsCode": "const data = $input.item.json;\n\n// Vapi chat API returns output array with text items\nlet reply = 'I apologize, I could not process your message.';\n\nif (data.output && Array.isArray(data.output)) {\n  const textItem = data.output.find(o => o.type === 'text');\n  if (textItem && textItem.text) reply = textItem.text;\n} else if (data.message && data.message.content) {\n  reply = data.message.content;\n} else if (data.choices && data.choices[0]) {\n  reply = data.choices[0].message?.content || reply;\n} else if (typeof data === 'string') {\n  reply = data;\n}\n\nreturn [{ json: { reply } }];"
+        "jsCode": "const data = $input.item.json;\nconst reply = data.output?.[0]?.content || 'I apologize, I could not process your message.';\nconst chatId = data.id || null;\nreturn [{ json: { reply, chatId } }];"
       },
       "id": "code-extract-reply",
       "name": "Code — Extract Reply",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
-      "position": [680, 300]
+      "position": [900, 300]
     },
     {
       "parameters": {
         "respondWith": "json",
-        "responseBody": "={{ JSON.stringify({ reply: $json.reply }) }}",
+        "responseBody": "={{ JSON.stringify({ reply: $json.reply, chatId: $json.chatId }) }}",
         "options": {
           "responseHeaders": {
             "entries": [
@@ -70,11 +80,22 @@
       "name": "Respond — Chat Reply",
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1,
-      "position": [900, 300]
+      "position": [1120, 300]
     }
   ],
   "connections": {
     "Webhook — Chat Message": {
+      "main": [
+        [
+          {
+            "node": "Code — Build Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code — Build Request": {
       "main": [
         [
           {

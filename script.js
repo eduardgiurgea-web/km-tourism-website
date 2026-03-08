@@ -502,10 +502,7 @@ document.addEventListener('DOMContentLoaded', () => {
    ========================================================= */
 (function () {
   var N8N_CHAT_WEBHOOK = 'https://n8n.srv1470515.hstgr.cloud/webhook/charlotte-chat';
-  var sessionId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
+  var previousChatId = null;
   var isWaiting = false;
 
   window.openChatModal = function () {
@@ -541,14 +538,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var typingEl = appendTyping();
 
+    var requestBody = { message: text };
+    if (previousChatId) requestBody.previousChatId = previousChatId;
+
     fetch(N8N_CHAT_WEBHOOK, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: text, sessionId: sessionId })
+      body: JSON.stringify(requestBody)
     })
       .then(function (r) { return r.json(); })
       .then(function (data) {
         typingEl.remove();
+        if (data.chatId) previousChatId = data.chatId;
         appendBubble('charlotte', data.reply || 'I\'m sorry, I couldn\'t process that. Please try again.');
       })
       .catch(function () {
