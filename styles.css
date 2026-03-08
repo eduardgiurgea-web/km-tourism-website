@@ -1142,3 +1142,103 @@ body::after {
   z-index: 9999;
   animation: pulseMarginGlow 2s infinite ease-in-out;
 }
+
+/* =========================================================
+   CALLBACK MODAL
+   ========================================================= */
+.callback-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.callback-modal-box {
+  position: relative;
+  background: #0d0d0d;
+  border: 1px solid var(--gold);
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  color: var(--white);
+  box-shadow: 0 0 60px rgba(201, 169, 110, 0.15);
+}
+
+.callback-modal-box h3 {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.callback-modal-box p {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0;
+}
+
+.callback-modal-box input[type="tel"] {
+  display: block;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  margin: 1.2rem 0;
+  border: 1px solid rgba(201, 169, 110, 0.5);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--white);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.callback-modal-box input[type="tel"]:focus {
+  border-color: var(--gold);
+}
+
+.callback-modal-box input[type="tel"]::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.callback-modal-submit {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+#callback-status {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: rgba(201, 169, 110, 0.9);
+  min-height: 1.2em;
+  margin-top: 0.5rem;
+}
+
+.callback-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.2rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.callback-modal-close:hover {
+  color: var(--gold);
+}

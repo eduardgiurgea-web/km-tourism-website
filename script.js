@@ -376,3 +376,115 @@ document.addEventListener('DOMContentLoaded', () => {
     // call it on load
     animateHeroText();
 });
+
+/* =========================================================
+   KM TOURISM — AUTOMATION BUTTON WIRING
+   Replace YOUR_N8N_WEBHOOK_URL and YOUR_CAL_USERNAME
+   with real values after n8n and Cal.com are set up.
+   ========================================================= */
+(function () {
+  // ── Config (update these after accounts are set up) ──────────
+  const N8N_CALLBACK_WEBHOOK = 'https://n8n.srv1470515.hstgr.cloud/webhook/callback-request';
+  const CAL_USERNAME = 'eduard-giurgea-t8v2nd';
+  const WHATSAPP_NUMBER = '97143486559';
+
+  function calLink(slug) {
+    return 'https://cal.com/' + CAL_USERNAME + '/' + slug;
+  }
+
+  // ── Callback button → modal ───────────────────────────────────
+  var btnCallback = document.getElementById('btn-callback');
+  if (btnCallback) {
+    btnCallback.addEventListener('click', function () {
+      document.getElementById('callback-modal').style.display = 'flex';
+      setTimeout(function () { document.getElementById('callback-phone').focus(); }, 100);
+    });
+  }
+
+  // ── Modal backdrop click to close ────────────────────────────
+  window.handleModalBackdropClick = function (e) {
+    if (e.target === document.getElementById('callback-modal')) {
+      closeCallbackModal();
+    }
+  };
+
+  // ── Close modal ───────────────────────────────────────────────
+  window.closeCallbackModal = function () {
+    document.getElementById('callback-modal').style.display = 'none';
+    document.getElementById('callback-status').textContent = '';
+    document.getElementById('callback-phone').value = '';
+  };
+
+  // ── Escape key closes modal ───────────────────────────────────
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeCallbackModal();
+  });
+
+  // ── Request callback (POST to n8n) ────────────────────────────
+  window.requestCallback = function () {
+    var phone = document.getElementById('callback-phone').value.trim();
+    var statusEl = document.getElementById('callback-status');
+
+    if (!phone || phone.replace(/[\s\-\+]/g, '').length < 7) {
+      statusEl.textContent = 'Please enter a valid phone number with country code.';
+      statusEl.style.color = '#e05555';
+      return;
+    }
+
+    statusEl.style.color = 'rgba(201,169,110,0.9)';
+    statusEl.textContent = 'Connecting... you will receive a call within 15 seconds.';
+
+    fetch(N8N_CALLBACK_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phone: phone,
+        source: 'callback-button',
+        timestamp: new Date().toISOString()
+      })
+    })
+      .then(function () {
+        statusEl.textContent = 'Your call is on its way. Please keep your phone handy!';
+      })
+      .catch(function () {
+        statusEl.style.color = '#e05555';
+        statusEl.textContent = 'Something went wrong. Please call us: +971-43486559';
+      });
+  };
+
+  // ── Enter key submits callback form ──────────────────────────
+  var phoneInput = document.getElementById('callback-phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') requestCallback();
+    });
+  }
+
+  // ── WhatsApp Us Now ───────────────────────────────────────────
+  var btnWhatsapp = document.getElementById('btn-whatsapp');
+  if (btnWhatsapp) {
+    btnWhatsapp.addEventListener('click', function () {
+      window.open(
+        'https://wa.me/' + WHATSAPP_NUMBER + '?text=' +
+        encodeURIComponent('Hi, I would like to enquire about KM Tourism services.'),
+        '_blank'
+      );
+    });
+  }
+
+  // ── Book a Private Consultation ───────────────────────────────
+  var btnBook = document.getElementById('btn-book-consultation');
+  if (btnBook) {
+    btnBook.addEventListener('click', function () {
+      window.open(calLink('private-consultation'), '_blank');
+    });
+  }
+
+  // ── Reserve Now buttons (per service card) ────────────────────
+  document.querySelectorAll('.reserve-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var slug = btn.getAttribute('data-service') || 'general-enquiry';
+      window.open(calLink(slug), '_blank');
+    });
+  });
+}());

@@ -18,6 +18,18 @@
 
 <body>
 
+  <!-- Callback Modal -->
+  <div id="callback-modal" class="callback-modal-overlay" style="display:none;" onclick="handleModalBackdropClick(event)">
+    <div class="callback-modal-box">
+      <button class="callback-modal-close" onclick="closeCallbackModal()" aria-label="Close">&times;</button>
+      <h3>We'll call you within 15 seconds</h3>
+      <p>Enter your number with country code</p>
+      <input type="tel" id="callback-phone" placeholder="+971 XX XXX XXXX" autocomplete="tel" />
+      <button class="btn-solid-gold callback-modal-submit" onclick="requestCallback()">Call Me Now</button>
+      <p id="callback-status"></p>
+    </div>
+  </div>
+
   <!-- Navigation Header -->
   <header id="main-header">
     <div class="nav-container">
@@ -40,7 +52,7 @@
         </ul>
       </nav>
       <div class="header-cta">
-        <button class="btn-frosted">Request an instant call back</button>
+        <button class="btn-frosted" id="btn-callback">Request an instant call back</button>
       </div>
     </div>
   </header>
@@ -92,7 +104,7 @@
                   <h3>Desert Activities</h3>
                   <p class="card-desc">The safari will give you the golden opportunity to see the towering sand dunes of
                     the desert as you go on a roller coaster ride on board your all-terrain vehicle.</p>
-                  <button class="btn-text">Reserve Now <span class="arrow">→</span></button>
+                  <button class="btn-text reserve-btn" data-service="desert-activities">Reserve Now <span class="arrow">→</span></button>
                 </div>
               </div>
             </div>
@@ -109,7 +121,7 @@
                   <h3>Seaplane & Helicopter</h3>
                   <p class="card-desc">Seawings offers scenic tours as well as transfer flights to various destinations
                     in the UAE.</p>
-                  <button class="btn-text">Reserve Now <span class="arrow">→</span></button>
+                  <button class="btn-text reserve-btn" data-service="private-consultation">Reserve Now <span class="arrow">→</span></button>
                 </div>
               </div>
             </div>
@@ -126,7 +138,7 @@
                   <h3>City Tours & Luxury Travel</h3>
                   <p class="card-desc">At KM Tourism we know that everyone’s idea of what makes the perfect luxury
                     family holiday.</p>
-                  <button class="btn-text">Reserve Now <span class="arrow">→</span></button>
+                  <button class="btn-text reserve-btn" data-service="private-consultation">Reserve Now <span class="arrow">→</span></button>
                 </div>
               </div>
             </div>
@@ -141,7 +153,7 @@
                 <div class="card-content">
                   <h3>Events</h3>
                   <p class="card-desc">A must do experience, ideal for private parties, weddings and celebrations.</p>
-                  <button class="btn-text">Reserve Now <span class="arrow">→</span></button>
+                  <button class="btn-text reserve-btn" data-service="events-weddings">Reserve Now <span class="arrow">→</span></button>
                 </div>
               </div>
             </div>
@@ -157,7 +169,7 @@
                 <div class="card-content">
                   <h3>Hot Air Ballooning</h3>
                   <p class="card-desc">The desert sunrise from the air on this hot air balloon ride in Dubai.</p>
-                  <button class="btn-text">Reserve Now <span class="arrow">→</span></button>
+                  <button class="btn-text reserve-btn" data-service="desert-activities">Reserve Now <span class="arrow">→</span></button>
                 </div>
               </div>
             </div>
@@ -331,8 +343,8 @@
       <div class="container cta-content fade-up">
         <h2 class="section-title">Your Private Dubai Experience Awaits</h2>
         <div class="cta-buttons">
-          <button class="btn-solid-gold">Book a Private Consultation</button>
-          <button class="btn-outline-white">WhatsApp Us Now</button>
+          <button class="btn-solid-gold" id="btn-book-consultation">Book a Private Consultation</button>
+          <button class="btn-outline-white" id="btn-whatsapp">WhatsApp Us Now</button>
         </div>
       </div>
     </section>
