@@ -557,7 +557,9 @@ document.addEventListener('DOMContentLoaded', () => {
       })
       .finally(function () {
         isWaiting = false;
-        document.getElementById('chat-send').disabled = false;
+        var btn = document.getElementById('chat-send');
+        btn.disabled = false;
+        btn.classList.remove('active');
         input.focus();
       });
   };
@@ -581,6 +583,18 @@ document.addEventListener('DOMContentLoaded', () => {
     messages.scrollTop = messages.scrollHeight;
     return div;
   }
+
+  // Gold pulsing send button when typing
+  document.addEventListener('input', function (e) {
+    if (e.target.id === 'chat-input') {
+      var btn = document.getElementById('chat-send');
+      if (e.target.value.trim()) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    }
+  });
 
   // Enter key sends message
   document.addEventListener('keydown', function (e) {
