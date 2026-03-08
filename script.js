@@ -487,4 +487,102 @@ document.addEventListener('DOMContentLoaded', () => {
       window.open(calLink(slug), '_blank');
     });
   });
+
+  // ── Let's Chat button ─────────────────────────────────────────
+  var btnChat = document.getElementById('btn-chat');
+  if (btnChat) {
+    btnChat.addEventListener('click', function () {
+      openChatModal();
+    });
+  }
+}());
+
+/* =========================================================
+   CHARLOTTE CHAT
+   ========================================================= */
+(function () {
+  var N8N_CHAT_WEBHOOK = 'https://n8n.srv1470515.hstgr.cloud/webhook/charlotte-chat';
+  var sessionId = 'session-' + Math.random().toString(36).slice(2);
+  var isWaiting = false;
+
+  window.openChatModal = function () {
+    var modal = document.getElementById('chat-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    var messages = document.getElementById('chat-messages');
+    if (messages.children.length === 0) {
+      appendBubble('charlotte', 'Hello! I\'m Charlotte, your KM Tourism concierge. How can I help you today?');
+    }
+    setTimeout(function () { document.getElementById('chat-input').focus(); }, 100);
+  };
+
+  window.closeChatModal = function () {
+    document.getElementById('chat-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  };
+
+  window.handleChatBackdropClick = function (e) {
+    if (e.target.id === 'chat-modal') closeChatModal();
+  };
+
+  window.sendChatMessage = function () {
+    if (isWaiting) return;
+    var input = document.getElementById('chat-input');
+    var text = input.value.trim();
+    if (!text) return;
+
+    appendBubble('user', text);
+    input.value = '';
+    isWaiting = true;
+    document.getElementById('chat-send').disabled = true;
+
+    var typingEl = appendTyping();
+
+    fetch(N8N_CHAT_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, sessionId: sessionId })
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        typingEl.remove();
+        appendBubble('charlotte', data.reply || 'I\'m sorry, I couldn\'t process that. Please try again.');
+      })
+      .catch(function () {
+        typingEl.remove();
+        appendBubble('charlotte', 'I\'m having trouble connecting right now. Please call us at +971-43486559.');
+      })
+      .finally(function () {
+        isWaiting = false;
+        document.getElementById('chat-send').disabled = false;
+        input.focus();
+      });
+  };
+
+  function appendBubble(who, text) {
+    var messages = document.getElementById('chat-messages');
+    var div = document.createElement('div');
+    div.className = 'chat-bubble ' + who;
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  }
+
+  function appendTyping() {
+    var messages = document.getElementById('chat-messages');
+    var div = document.createElement('div');
+    div.className = 'chat-bubble typing';
+    div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+    return div;
+  }
+
+  // Enter key sends message
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && document.getElementById('chat-modal').style.display === 'flex') {
+      sendChatMessage();
+    }
+  });
 }());

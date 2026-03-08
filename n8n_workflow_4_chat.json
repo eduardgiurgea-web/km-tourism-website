@@ -1,0 +1,119 @@
+{
+  "name": "KM Tourism — WF4: Charlotte Chat",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "charlotte-chat",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "id": "webhook-chat",
+      "name": "Webhook — Chat Message",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "km-charlotte-chat"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/chat",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer dc2cf577-5cff-4424-a588-5d8c2aaf832a"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"assistantId\": \"f8a1a26e-e90e-42ef-b86b-a7ca78df8640\",\n  \"input\": {\n    \"type\": \"text\",\n    \"text\": \"{{ $json.body.message }}\"\n  },\n  \"sessionId\": \"{{ $json.body.sessionId }}\"\n}",
+        "options": {}
+      },
+      "id": "vapi-chat",
+      "name": "Vapi — Chat",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.item.json;\n\n// Vapi chat API returns output array with text items\nlet reply = 'I apologize, I could not process your message.';\n\nif (data.output && Array.isArray(data.output)) {\n  const textItem = data.output.find(o => o.type === 'text');\n  if (textItem && textItem.text) reply = textItem.text;\n} else if (data.message && data.message.content) {\n  reply = data.message.content;\n} else if (data.choices && data.choices[0]) {\n  reply = data.choices[0].message?.content || reply;\n} else if (typeof data === 'string') {\n  reply = data;\n}\n\nreturn [{ json: { reply } }];"
+      },
+      "id": "code-extract-reply",
+      "name": "Code — Extract Reply",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ reply: $json.reply }) }}",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Access-Control-Allow-Origin",
+                "value": "*"
+              }
+            ]
+          }
+        }
+      },
+      "id": "respond-chat",
+      "name": "Respond — Chat Reply",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Webhook — Chat Message": {
+      "main": [
+        [
+          {
+            "node": "Vapi — Chat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vapi — Chat": {
+      "main": [
+        [
+          {
+            "node": "Code — Extract Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code — Extract Reply": {
+      "main": [
+        [
+          {
+            "node": "Respond — Chat Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "tags": ["KM Tourism", "Charlotte", "Chat"]
+}
